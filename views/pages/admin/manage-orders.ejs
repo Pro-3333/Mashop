@@ -147,7 +147,7 @@
               <td data-label="ID"><%= order.id %></td>
               <td data-label="Nom"><%= order.customer_name %></td>
               <td data-label="Email"><%= order.customer_email %></td>
-              <td data-label="Total"><strong><%= order.total %> €</strong></td>
+              <td data-label="Total"><strong><%= order.total %> FCFA</strong></td>
               <td data-label="Statut">
                 <% 
                   let statusClass = '';
@@ -165,7 +165,7 @@
                   <% order.OrderItems.forEach(item => { %>
                     <li>
                       <%= item.Product ? item.Product.name : "Produit supprimé" %> 
-                      (x<%= item.quantity %>) - <%= item.price %> €
+                      (x<%= item.quantity %>) - <%= item.price %> FCFA
                     </li>
                   <% }) %>
                 </ul>
