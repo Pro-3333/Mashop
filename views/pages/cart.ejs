@@ -223,7 +223,7 @@
           <img src="/uploads/<%= item.image || 'placeholder.png' %>" alt="<%= item.name %>">
           <div class="product-info">
             <div class="product-name"><%= item.name %></div>
-            <div class="product-price"><%= price.toFixed(2) %> €</div>
+            <div class="product-price"><%= price.toFixed(2) %> FCFA</div>
           </div>
           <div>
             <span class="badge-quantity"><%= quantity %></span>
@@ -235,13 +235,13 @@
                 <button type="submit" class="btn-remove"><i class="bi bi-dash-lg"></i></button>
               </form>
             </div>
-            <div class="product-total mt-2"><%= total.toFixed(2) %> €</div>
+            <div class="product-total mt-2"><%= total.toFixed(2) %> FCFA</div>
           </div>
         </div>
       <% }) %>
 
       <div class="cart-total">
-        <h4>Total général : <span style="color:#ff8000;"><%= grandTotal.toFixed(2) %> €</span></h4>
+        <h4>Total général : <span style="color:#ff8000;"><%= grandTotal.toFixed(2) %> FCFA</span></h4>
         <a href="/cart/checkout" class="btn-checkout"><i class="bi bi-credit-card"></i> Passer la commande</a>
       </div>
     <% } %>
