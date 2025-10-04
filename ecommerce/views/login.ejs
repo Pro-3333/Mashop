@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion - MaShop</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main.auth {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .auth-container {
+      background: rgba(25,25,25,0.9);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      padding: 40px 50px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-container h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      color: #ff8000;
+      letter-spacing: 1px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 8px rgba(255,128,0,0.5);
+    }
+
+    button[type="submit"] {
+      margin-top: 0.5rem;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff8000, #e66d00);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255,128,0,0.4);
+    }
+
+    p {
+      margin-top: 1.2rem;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    p a {
+      color: #ff8000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    p a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 30px 25px;
+      }
+      .auth-container h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <%- include('./partials/header') %>
+
+  <main class="auth">
+    <div class="auth-container">
+      <h2>Connexion</h2>
+      <form action="/login" method="POST">
+        <input type="email" name="email" placeholder="Adresse email" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <button type="submit">Se connecter</button>
+      </form>
+      <p>Pas encore de compte ? <a href="/register">S'inscrire</a></p>
+    </div>
+  </main>
+
+  <%- include('./partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produits - Mon E-commerce</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== GLOBAL ===== */
+    body {
+      background: radial-gradient(circle at top, #1a1a1a 0%, #0d0d0d 80%);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding-top: 80px;
+    }
+
+    a { text-decoration: none; }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      font-size: 2.3rem;
+      font-weight: 700;
+      text-align: center;
+      color: #ff8000;
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff8000, #ff5500);
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* ===== PRODUCTS GRID ===== */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* ===== PRODUCT CARD ===== */
+    .product-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      text-align: center;
+      padding: 1rem;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(255,128,0,0.4);
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ===== PRODUCT IMAGE ===== */
+    .product-image {
+      width: 100%;
+      height: 220px;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.08);
+    }
+
+    /* ===== PRODUCT INFO ===== */
+    .product-card h5 {
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .product-card p {
+      color: #bbb;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      min-height: 2.5rem;
+    }
+
+    .price {
+      font-weight: 600;
+      color: #ff8000;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-cta {
+      background: linear-gradient(90deg, #ff8000, #ff5500);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 25px;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      width: 90%;
+      margin: 0.3rem auto;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255,128,0,0.5);
+    }
+
+    .btn-cta i {
+      margin-right: 6px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .product-card {
+        padding: 0.8rem;
+      }
+
+      .product-image {
+        height: 160px;
+      }
+
+      .product-card h5 {
+        font-size: 1rem;
+      }
+
+      .btn-cta {
+        width: 100%;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+
+      .product-image {
+        height: 150px;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <%- include('../partials/header') %>
+
+  <!-- PRODUITS -->
+  <section class="products-section py-5">
+    <div class="container">
+      <h2 class="section-title"><i class="bi bi-box-seam"></i> Nos Produits</h2>
+
+      <div class="products-grid">
+        <% products.forEach(product => { %>
+          <div class="product-card">
+            <div class="product-image">
+              <img src="/uploads/<%= product.image %>" alt="<%= product.name %>">
+            </div>
+            <h5><%= product.name %></h5>
+            <p><%= product.description %></p>
+            <p class="price"><i class="bi bi-tag-fill"></i> <%= product.price %> €</p>
+
+            <a href="/products/<%= product.id %>" class="btn-cta">
+              <i class="bi bi-eye"></i> Voir le produit
+            </a>
+
+            <form action="/cart/add/<%= product.id %>" method="POST">
+              <button type="submit" class="btn-cta">
+                <i class="bi bi-cart-plus"></i> Ajouter au panier
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+</body>
+</html>

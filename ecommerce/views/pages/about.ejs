@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>À propos - MaShop</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* === GLOBAL === */
+    body {
+      background: #0d0d0d;
+      color: #f5f5f5;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding-top: 80px;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; }
+
+    /* === HERO SECTION === */
+    .hero-section {
+      background: radial-gradient(circle at center, #1a1a1a 0%, #0d0d0d 100%);
+      padding: 100px 20px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, rgba(255,128,0,0.1), transparent, rgba(255,128,0,0.1));
+      animation: rotate 10s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      z-index: 1;
+      position: relative;
+    }
+
+    .hero-title span {
+      color: #ff8000;
+      text-shadow: 0 0 15px rgba(255,128,0,0.7);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: #ccc;
+      max-width: 600px;
+      margin: 0 auto;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* === ABOUT CONTENT === */
+    .about-content {
+      padding: 80px 20px;
+      background: linear-gradient(180deg, #111 0%, #0d0d0d 100%);
+    }
+
+    .content-wrapper {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      padding: 40px 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content-wrapper:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(255, 128, 0, 0.25);
+    }
+
+    .lead {
+      font-size: 1.1rem;
+      color: #ddd;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .content-wrapper p {
+      color: #bbb;
+      line-height: 1.6;
+    }
+
+    /* === CTA BUTTON === */
+    .about-cta {
+      margin-top: 2rem;
+    }
+
+    .about-cta .btn {
+      background: #ff8000;
+      color: #fff;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255,128,0,0.4);
+    }
+
+    .about-cta .btn:hover {
+      background: #e67100;
+      box-shadow: 0 0 25px rgba(255,128,0,0.6);
+      transform: scale(1.05);
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2rem; }
+      .content-wrapper { padding: 25px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <%- include('../partials/header') %>
+
+  <!-- Section Hero -->
+  <section class="hero-section">
+    <div class="container position-relative">
+      <h1 class="hero-title mb-3">À propos de <span>MaShop</span></h1>
+      <p class="hero-subtitle">
+        Offrir les meilleurs produits et une expérience client exceptionnelle, jour après jour.
+      </p>
+    </div>
+  </section>
+
+  <!-- Section Contenu -->
+  <section class="about-content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+          <div class="content-wrapper text-center">
+            <p class="lead">
+              Chez <strong>MaShop</strong>, nous croyons que le shopping en ligne doit être simple, fluide et agréable. 
+              C’est pourquoi nous sélectionnons avec soin des produits de qualité à des prix justes.
+            </p>
+            <p>
+              Notre équipe dévouée travaille chaque jour pour améliorer votre expérience d’achat. 
+              Nous combinons innovation, rapidité et service client irréprochable afin de répondre à toutes vos attentes.
+            </p>
+            <p>
+              Votre satisfaction est notre priorité — parce que chez MaShop, chaque client compte.
+            </p>
+
+            <!-- CTA -->
+            <div class="about-cta">
+              <a href="/products" class="btn">Découvrir nos produits</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <%- include('../partials/footer') %>
+</body>
+</html>

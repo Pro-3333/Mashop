@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion des Produits - Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap + Icons + Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== GLOBAL ===== */
+    body {
+      background: linear-gradient(180deg, #0d0d0d 0%, #1a1a1a 100%);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      padding-top: 80px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      color: #ff8000;
+      margin-bottom: 2rem;
+    }
+
+    /* ===== CONTAINER ===== */
+    .content-wrapper {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-add {
+      background: linear-gradient(90deg, #28a745, #20c997);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      border-radius: 30px;
+      padding: 0.6rem 1.4rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(32, 201, 151, 0.4);
+    }
+
+    .btn-add:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 15px rgba(40, 167, 69, 0.7);
+    }
+
+    .btn-warning, .btn-danger {
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-warning:hover {
+      background-color: #ffca2c;
+      transform: translateY(-2px);
+    }
+
+    .btn-danger:hover {
+      background-color: #dc3545;
+      transform: translateY(-2px);
+    }
+
+    /* ===== TABLE ===== */
+    .table-custom {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 0.75rem;
+    }
+
+    .table-custom thead th {
+      background: rgba(255, 128, 0, 0.15);
+      color: #fff;
+      font-weight: 600;
+      padding: 0.9rem;
+      border-radius: 10px;
+    }
+
+    .table-custom tbody tr {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .table-custom tbody tr:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 128, 0, 0.4);
+    }
+
+    .table-custom td {
+      padding: 0.8rem;
+      vertical-align: middle;
+    }
+
+    /* ===== BADGE STOCK ===== */
+    .badge-stock {
+      font-size: 0.85rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 10px;
+      font-weight: 500;
+    }
+
+    .stock-high { background: #28a745; color: #fff; }
+    .stock-low { background: #ffc107; color: #000; }
+    .stock-out { background: #dc3545; color: #fff; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .table-custom thead { display: none; }
+      .table-custom tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border-radius: 16px;
+      }
+      .table-custom tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.6rem 1rem;
+        border: none;
+      }
+      .table-custom tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #ff8000;
+      }
+    }
+  </style>
+</head>
+<body>
+  <%- include('../../partials/header') %>
+
+  <div class="container mt-5 mb-5">
+    <div class="content-wrapper">
+      <h1><i class="bi bi-box-seam"></i> Gestion des Produits</h1>
+
+      <div class="d-flex justify-content-end mb-3">
+        <a href="/admin/products/add" class="btn btn-add">
+          <i class="bi bi-plus-circle"></i> Ajouter un produit
+        </a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-custom align-middle">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+              <th>Prix</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% products.forEach(product => { %>
+              <tr>
+                <td data-label="ID">#<%= product.id %></td>
+                <td data-label="Nom"><%= product.name %></td>
+                <td data-label="Prix"><strong><%= product.price %> €</strong></td>
+                <td data-label="Stock">
+                  <% 
+                    let stockClass = product.stock > 20 ? 'stock-high' 
+                                  : product.stock > 0 ? 'stock-low' 
+                                  : 'stock-out'; 
+                  %>
+                  <span class="badge badge-stock <%= stockClass %>">
+                    <%= product.stock > 0 ? product.stock + ' en stock' : 'Rupture' %>
+                  </span>
+                </td>
+                <td data-label="Actions">
+                  <div class="d-flex gap-2">
+                    <a href="/admin/products/edit/<%= product.id %>" class="btn btn-warning btn-sm">
+                      <i class="bi bi-pencil-square"></i> Modifier
+                    </a>
+                    <form action="/admin/products/delete/<%= product.id %>" method="POST" onsubmit="return confirm('Supprimer ce produit ?');">
+                      <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash3"></i> Supprimer
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../../partials/footer') %>
+</body>
+</html>
