@@ -85,9 +85,9 @@ router.post('/checkout', async (req, res) => {
       <ul>
     `;
     cart.forEach(item => {
-      html += `<li>${item.name} - Quantité : ${item.quantity} - Prix : ${item.price} €</li>`;
+      html += `<li>${item.name} - Quantité : ${item.quantity} - Prix : ${item.price} FCFA</li>`;
     });
-    html += `</ul><p><strong>Total :</strong> ${total} €</p>`;
+    html += `</ul><p><strong>Total :</strong> ${total} FCFA</p>`;
 
     try {
       await transporter.sendMail({
@@ -102,7 +102,7 @@ router.post('/checkout', async (req, res) => {
           <p><strong>Adresse :</strong> ${address}</p>
           <h3>Produits :</h3>
           <ul>
-            ${cart.map(item => `<li>${item.name} - Quantité : ${item.quantity} - Prix : ${item.price} €</li>`).join('')}
+            ${cart.map(item => `<li>${item.name} - Quantité : ${item.quantity} - Prix : ${item.price} FCFA</li>`).join('')}
           </ul>
           <p><strong>Total :</strong> ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} FCFA</p>
         `,
