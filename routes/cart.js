@@ -104,7 +104,7 @@ router.post('/checkout', async (req, res) => {
           <ul>
             ${cart.map(item => `<li>${item.name} - Quantité : ${item.quantity} - Prix : ${item.price} €</li>`).join('')}
           </ul>
-          <p><strong>Total :</strong> ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} €</p>
+          <p><strong>Total :</strong> ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0)} FCFA</p>
         `,
       });      
       console.log("✅ Email envoyé avec succès !");
