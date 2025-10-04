@@ -193,7 +193,7 @@
             <% orders.forEach(order => { %>
               <tr>
                 <td>#<%= order.id %></td>
-                <td><strong><%= order.total %> €</strong></td>
+                <td><strong><%= order.total %> FCFA</strong></td>
                 <td>
                   <% 
                     let statusClass = '';
@@ -209,7 +209,7 @@
                 <td>
                   <ul>
                     <% order.OrderItems.forEach(item => { %>
-                      <li><%= item.Product ? item.Product.name : "Produit supprimé" %> (x<%= item.quantity %>) - <%= item.price %> €</li>
+                      <li><%= item.Product ? item.Product.name : "Produit supprimé" %> (x<%= item.quantity %>) - <%= item.price %> FCFA</li>
                     <% }) %>
                   </ul>
                 </td>
@@ -239,10 +239,10 @@
           <div class="order-status <%= statusClass %>"><%= order.status %></div>
           <ul class="order-products mt-2">
             <% order.OrderItems.forEach(item => { %>
-              <li><%= item.Product ? item.Product.name : "Produit supprimé" %> (x<%= item.quantity %>) - <%= item.price %> €</li>
+              <li><%= item.Product ? item.Product.name : "Produit supprimé" %> (x<%= item.quantity %>) - <%= item.price %> FCFA</li>
             <% }) %>
           </ul>
-          <div class="mt-2"><strong>Total :</strong> <%= order.total %> €</div>
+          <div class="mt-2"><strong>Total :</strong> <%= order.total %> FCFA</div>
         </div>
       <% }) %>
 
