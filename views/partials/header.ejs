@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Navbar Responsive avec Recherche</title>
+  <style>
+    *{box-sizing:border-box}
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      padding-top: 100px;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 1000;
+      backdrop-filter: blur(15px) saturate(180%);
+      background: rgba(15,15,15,0.85);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
+    .header.scrolled {
+      background: rgba(15,15,15,0.95);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+
+    .header-container {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.8rem 1rem; flex-wrap: nowrap;
+    }
+
+    /* ===== LOGO ===== */
+    .logo a {
+      font-size: 1.7rem; font-weight: 700; color: #fff;
+      text-decoration: none; letter-spacing: 1px;
+      transition: transform 0.3s ease;
+    }
+    .logo a:hover { color: #ff8000; transform: scale(1.05); }
+
+    /* ===== NAV DESKTOP ===== */
+    .nav-menu ul {
+      list-style: none; display: flex; gap: 2rem;
+      margin: 0; padding: 0;
+    }
+    .nav-menu a {
+      text-decoration: none; color: #fff; font-weight: 500; position: relative;
+    }
+    .nav-menu a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 2px; background: #ff8000; transition: width 0.3s ease;
+    }
+    .nav-menu a:hover::after { width: 100%; }
+
+    /* ===== SEARCH (desktop) ===== */
+    .search-container.desktop {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      padding: 0 1rem;
+    }
+    .search-container.desktop .search-form {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.45rem 1rem;
+      border-radius: 25px;
+      border: none; outline: none;
+      background: rgba(255,255,255,0.1);
+      color: #fff; transition: all 0.3s ease;
+    }
+    .search-input::placeholder { color: #aaa; }
+    .search-input:focus {
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 8px rgba(255,128,0,0.5);
+    }
+
+    /* ===== SEARCH (mobile) ===== */
+    .search-container.mobile {
+      width: 100%; text-align: center; padding: 0.6rem 1rem;
+      display: none; /* visible seulement sur mobile */
+      background: rgba(15,15,15,0.9);
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .search-container.mobile .search-form {
+      display: flex; justify-content: center;
+      width: 100%; max-width: 400px;
+    }
+
+    /* ===== ACTIONS ===== */
+    .actions {
+      display: flex; align-items: center; gap: 1rem;
+      margin-left: 1rem;
+    }
+    .cart-btn {
+      position: relative; text-decoration: none; color: #fff; font-size: 1.4rem;
+    }
+    .cart-btn:hover { color: #ff8000; }
+    .cart-count {
+      position: absolute; top: -6px; right: -10px;
+      background: #ff8000; color: #fff; font-size: 0.75rem; font-weight: bold;
+      padding: 2px 6px; border-radius: 50%;
+    }
+    .login-btn {
+      padding: 6px 14px; border-radius: 20px;
+      background: #ff8000; color: #fff; font-weight: 600;
+      text-decoration: none; transition: background 0.3s;
+    }
+    .login-btn:hover { background: #e66d00; }
+
+    /* ===== BURGER ===== */
+    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1100; }
+    .burger span {
+      width: 25px; height: 3px; background: #fff; border-radius: 3px; transition: all 0.3s ease;
+    }
+    .burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .burger.active span:nth-child(2) { opacity: 0; }
+    .burger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* ===== MOBILE MENU ===== */
+    .mobile-menu {
+      display: none; position: absolute; top: 100%; left: 0; width: 100%;
+      background: rgba(15,15,15,0.95); padding: 1.5rem; backdrop-filter: blur(15px);
+      flex-direction: column; gap: 1rem;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem; }
+    .mobile-menu a { color: #fff; font-size: 1.1rem; text-decoration: none; }
+    .mobile-menu a:hover { color: #ff8000; }
+
+    /* ===== BOTTOM NAV (mobile only) ===== */
+    .bottom-nav { display: none; }
+    .bottom-nav a {
+      display: flex; flex-direction: column; align-items: center;
+      text-decoration: none; font-size: 12px; padding: 6px 8px; color: #aaa; position: relative;
+    }
+    .bottom-nav a img { width: 22px; height: 22px; margin-bottom: 4px; filter: invert(1); }
+    .bottom-nav a.active { color: #ff8000; }
+    .bottom-nav .cart-count { top: 0; right: 14px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-menu { display: none; }
+      .burger { display: flex; }
+      .search-container.desktop { display: none; }
+      .search-container.mobile { display: block; }
+      .bottom-nav {
+        display: flex !important; position: fixed; bottom: 0; left: 0; width: 100%;
+        background: rgba(15,15,15,0.95); border-top: 1px solid rgba(255,255,255,0.1);
+        justify-content: space-around; padding: 8px 0; z-index: 1100;
+      }
+      body { padding-bottom: 60px; }
+    }
+
+    @media (max-width: 480px) {
+      .logo a { font-size: 1.3rem; }
+      .search-input { padding: 0.35rem 0.8rem; font-size: 0.9rem; }
+      .login-btn { padding: 5px 10px; font-size: 0.85rem; }
+    }
+
+    main{padding:20px;max-width:1100px;margin:0 auto}
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-container">
+      <div class="logo"><a href="/">MaShop</a></div>
+
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/products">Produits</a></li>
+          <li><a href="/about">À propos</a></li>
+          <li><a href="/orders">Mes commandes</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- 🔍 Barre de recherche desktop -->
+      <div class="search-container desktop">
+        <form class="search-form" action="/search" method="get">
+          <input class="search-input" type="search" name="q" placeholder="Rechercher..." />
+        </form>
+      </div>
+
+      <div class="actions">
+        <a href="/login" class="login-btn">Connexion</a>
+        <a href="/cart" class="cart-btn">🛒<span class="cart-count">2</span></a>
+      </div>
+
+      <div class="burger" id="burger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- 🔍 Barre de recherche mobile -->
+    <div class="search-container mobile">
+      <form class="search-form" action="/search" method="get">
+        <input class="search-input" type="search" name="q" placeholder="Rechercher..." />
+      </form>
+    </div>
+
+    <!-- Menu mobile -->
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="/">Accueil</a></li>
+        <li><a href="/products">Produits</a></li>
+        <li><a href="/about">À propos</a></li>
+        <li><a href="/orders">Mes commandes</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/login">Connexion</a></li>
+        <li><a href="/cart">Mon panier</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Bottom nav (mobile) -->
+  <nav class="bottom-nav">
+    <a href="/" class="active"><img src="/icons/home-1-svgrepo-com.svg" alt="home"><span>Accueil</span></a>
+    <a href="/products"><img src="/icons/shopping-bag-svgrepo-com.svg" alt="shop"><span>Produits</span></a>
+    <a href="/orders"><img src="/icons/order-svgrepo-com (1).svg" alt="orders"><span>Commandes</span></a>
+    <a href="/about"><img src="/icons/about-faq-help-svgrepo-com.svg" alt="info"><span>À propos</span></a>
+    <a href="/contact"><img src="/icons/contact-book-svgrepo-com.svg" alt="contact"><span>Contact</span></a>
+  </nav>
+
+  
+
+  <script>
+    const burger = document.getElementById("burger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    burger.addEventListener("click", () => {
+      burger.classList.toggle("active");
+      mobileMenu.classList.toggle("active");
+    });
+
+    window.addEventListener("scroll", () => {
+      document.querySelector(".header")
+        .classList.toggle("scrolled", window.scrollY > 10);
+    });
+  </script>
+</body>
+</html>
