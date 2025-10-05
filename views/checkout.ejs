@@ -135,13 +135,13 @@
         <% const total = Number(item.price) * Number(item.quantity); grandTotal += total; %>
         <li class="list-group-item">
           <div><%= item.name %> (x<%= item.quantity %>)</div>
-          <span class="badge-total"><%= total.toFixed(2) %> €</span>
+          <span class="badge-total"><%= total.toFixed(2) %> FCFA</span>
         </li>
       <% }) %>
     </ul>
 
     <div class="mb-3 text-end">
-      <strong>Total général : <span class="badge-total"><%= grandTotal.toFixed(2) %> €</span></strong>
+      <strong>Total général : <span class="badge-total"><%= grandTotal.toFixed(2) %> FCFA</span></strong>
     </div>
 
     <button type="submit" class="btn btn-success">Passer la commande ✅</button>
