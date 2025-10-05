@@ -292,10 +292,7 @@
           <img src="/image/photo-1542291026-7eec264c27ff.jpeg" alt="Catégorie Gaming" loading="lazy">
           <p>Gaming</p>
         </div>
-        <div class="cat-card">
-          <img src="/img/cat4.png" alt="Catégorie Maison" loading="lazy">
-          <p>Maison</p>
-        </div>
+       
       </div>
     </section>
 
@@ -306,11 +303,7 @@
         <% trendingProducts.forEach(product => { %>
           <article class="product-card">
             <img src="<%= product.image %>" alt="<%= product.name %>" loading="lazy">
-            <div class="product-info">
-              <h3><%= product.name %></h3>
-              <p class="price"><%= product.price %> FCFA</p>
-            </div>
-            <a href="/products/<%= product.id %>" class="btn-cta">Voir</a>
+           
           </article>
         <% }) %>
       <% } else { %>
@@ -325,11 +318,7 @@
         <% newProducts.forEach(product => { %>
           <article class="product-card">
             <img src="<%= product.image %>" alt="<%= product.name %>" loading="lazy">
-            <div class="product-info">
-              <h3><%= product.name %></h3>
-              <p class="price"><%= product.price %> FCFA</p>
-            </div>
-            <a href="/products/<%= product.id %>" class="btn-cta">Voir</a>
+           
           </article>
         <% }) %>
       <% } else { %>
