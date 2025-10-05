@@ -22,7 +22,9 @@
     "multer": "^2.0.2",
     "mysql2": "^3.14.5",
     "nodemailer": "^7.0.6",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "cloudinary": "^1.x.x",
+    "multer-storage-cloudinary": "^4.x.x"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
