@@ -68,6 +68,11 @@ sequelize.sync({ force: false }).then(async () => {
 const adminOrdersRoutes = require("./routes/adminOrders");
 app.use("/admin/manage-orders", adminOrdersRoutes);
 
+app.get('/download', (req, res) => {
+  res.render('pages/download');
+});
+
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Serveur lancé sur http://0.0.0.0:${PORT}`);
